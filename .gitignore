@@ -1,0 +1,10 @@
+nodes_modules/
+package-lock.json
+
+out/
+dist/
+*.js.map
+
+.DS_Store
+.vscode-test/
+*.log

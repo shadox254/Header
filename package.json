@@ -1,0 +1,58 @@
+{
+  "name": "custom-42header",
+  "displayName": "Custom 42 Header",
+  "description": "A custom 79x14 header for 42 School.",
+  "version": "1.0.0",
+  "publisher": "shadox",
+  "engines": {
+    "vscode": "^1.60.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished" 
+  ],
+  "main": "./out/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "42header.insertHeader",
+        "title": "Insert Custom 42 Header"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "42header.insertHeader",
+        "key": "ctrl+alt+h",
+        "mac": "cmd+alt+h",
+        "when": "editorTextFocus"
+      }
+    ],
+    "configuration": {
+      "title": "Custom 42 Header Settings",
+      "properties": {
+        "42header.username": {
+          "type": "string",
+          "default": "",
+          "description": "Your login or username for the header."
+        },
+        "42header.email": {
+          "type": "string",
+          "default": "",
+          "description": "Your email address (e.g., user@student.42.fr)."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^16.x",
+    "@types/vscode": "^1.60.0",
+    "typescript": "^4.x"
+  }
+}
