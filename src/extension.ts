@@ -6,28 +6,16 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Register the manual command to insert the header
     let disposable = vscode.commands.registerCommand('42header.insertHeader', () => {
-        const editor = vscode.window.activeTextEditor;
-        updateHeader(editor);
+        updateHeader(vscode.window.activeTextEditor);
     });
 
     context.subscriptions.push(disposable);
-
-    // Listen for file save events to automatically update the header
-    vscode.workspace.onWillSaveTextDocument(event => {
-        const document = event.document;
-        const editor = vscode.window.activeTextEditor;
-
-        // Only update if the saved document is the one currently active
-        if (editor && editor.document === document) {
-            updateHeader(editor, event);
-        }
-    });
 }
 
 /**
  * Main function to handle header insertion or update
  */
-function updateHeader(editor: vscode.TextEditor | undefined, event?: vscode.TextDocumentWillSaveEvent) {
+function updateHeader(editor: vscode.TextEditor | undefined) {
     if (!editor) return;
 
     const document = editor.document;
@@ -72,21 +60,13 @@ function updateHeader(editor: vscode.TextEditor | undefined, event?: vscode.Text
     // Generate the new header content
     const header = generateHeader(fileName, user, mail, nowDateStr, createdDate, createdBy, delimiters);
 
-    if (event && currentHeaderRange) {
-        // Save mode: Use waitUntil to ensure the edit is applied before the file hits the disk
-        event.waitUntil(Promise.resolve([
-            new vscode.TextEdit(currentHeaderRange, header)
-        ]));
-    } else {
-        // Manual mode: Insert or replace immediately
-        editor.edit(editBuilder => {
-            if (currentHeaderRange) {
-                editBuilder.replace(currentHeaderRange, header);
-            } else {
-                editBuilder.insert(new vscode.Position(0, 0), header);
-            }
-        });
-    }
+    editor.edit(editBuilder => {
+        if (currentHeaderRange) {
+            editBuilder.replace(currentHeaderRange, header);
+        } else {
+            editBuilder.insert(new vscode.Position(0, 0), header);
+        }
+    });
 }
 
 /**
@@ -128,17 +108,22 @@ function generateHeader(fileName: string, user: string, mail: string, updatedDat
     let res = border;
     
     // Custom ASCII Art Area
-    res += fillLine("                               :::       ::::::::");
-    res += fillLine("                             :+:       :+:    :+:");
-    res += fillLine("                           +:+ +:+           +:+");
-    res += fillLine("                          +#+  +:+         +#+");
-    res += fillLine("                         +#+#+#+#+#+     +#+");
-    res += fillLine("                             #+#      ##########");
-
+    res += fillLine("");
+    res += fillLine("   |\      _,,,---,,_      ");
+    res += fillLine("   /,`.-'`'    -.  ;-;;,_  ");
+    res += fillLine("  |,4-  ) )-,_. ,\ (  `'-' ");
+    res += fillLine(" '---''(_/--'  `-'\_)         __..--''``---....___   _..._    __");
+    res += fillLine("                          _.-'    .-/\";  `        ``<._  ``.''_ `.");
+    res += fillLine("                      _.-' _..--.'_    \                    `( ) )");
+    res += fillLine("                     (_..-' // (< _     ;_..__               ; `'");
+    res += fillLine("                                `-._,_)' // / ``--...____..-'");
+    res += fillLine("")
     res += border;
+
+
     // File Info Area
     res += fillLine(`File: ${fileName}`);
-    res += fillLine(`By: ${user} <${mail}>`);
+    res += fillLine(`By: ${user} <${mail}>`);5
     res += fillLine(`Created: ${createdDate} by ${createdBy}`);
     res += fillLine(`Updated: ${updatedDate} by ${user}`);
     res += border;
@@ -177,7 +162,7 @@ function getDelimiters(languageId: string): { start: string, end: string } | nul
         case 'ruby':
         case 'perl':
         case 'r':
-            return { start: '#', end: '#' };
+            return { start: '# ', end: ' #' };
         case 'lua':
         case 'sql':
         case 'haskell':

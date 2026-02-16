@@ -1,5 +1,6 @@
 nodes_modules/
 package-lock.json
+*.vsix
 
 out/
 dist/

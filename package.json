@@ -1,9 +1,14 @@
 {
   "name": "custom-42header",
   "displayName": "Custom 42 Header",
-  "description": "A custom 79x14 header for 42 School.",
+  "description": "A custom header.",
   "version": "1.0.0",
   "publisher": "shadox",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shadox254/Header"
+  },
   "engines": {
     "vscode": "^1.60.0"
   },
@@ -11,7 +16,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onStartupFinished" 
+    "onStartupFinished"
   ],
   "main": "./out/extension",
   "contributes": {
@@ -35,12 +40,12 @@
         "42header.username": {
           "type": "string",
           "default": "",
-          "description": "Your login or username for the header."
+          "description": "rruiz."
         },
         "42header.email": {
           "type": "string",
           "default": "",
-          "description": "Your email address (e.g., user@student.42.fr)."
+          "description": "rruiz@student.42lehavre.fr."
         }
       }
     }
