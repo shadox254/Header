@@ -1,6 +1,7 @@
 nodes_modules/
 package-lock.json
 *.vsix
+test.c
 
 out/
 dist/
@@ -9,3 +10,4 @@ dist/
 .DS_Store
 .vscode-test/
 *.log
+.vscode
